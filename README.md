@@ -1,2 +1,1 @@
-# bookstore-Admin
-书城管理后台
+书城后台管理系统
