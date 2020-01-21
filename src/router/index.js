@@ -66,7 +66,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 404 page must be placed at the end !!!
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 // 调用 router.addRoutes(asyncRoutes) 添加动态路由

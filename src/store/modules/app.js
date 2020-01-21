@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 const state = {
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true, // 控制侧边栏的展开状态，cookie中获取的值是'0''1'，需要转换
     withoutAnimation: false
   },
   device: 'desktop',

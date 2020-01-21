@@ -1,15 +1,17 @@
 <template>
+  <!--  根据路由的hidden属性进行展示隐藏-->
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+          <!-- 根据路由meta属性生成元素 -->
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
+      <template v-slot:title>
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
@@ -36,7 +38,7 @@ export default {
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
-    // route object
+    // 父组件传递的路由
     item: {
       type: Object,
       required: true
@@ -51,34 +53,34 @@ export default {
     }
   },
   data() {
-    // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
   },
   methods: {
+    // 判断是否只有一个可显示的子路由，有则直接显示子路由，不显示父路由
     hasOneShowingChild(children = [], parent) {
+      // 获取显示的子路由数组
       const showingChildren = children.filter(item => {
-        if (item.hidden) {
+        if (item.hidden) { // 子路由hidden为true 直接返回 false
           return false
         } else {
-          // Temp set(will be used if only has one showing child)
+          // 将子路由赋值给 onlyOneChild，用于只包含一个路由时展示
           this.onlyOneChild = item
           return true
         }
       })
 
-      // When there is only one child router, the child router is displayed by default
+      // 只有一个子路由，则返回true，作为默认路由显示
       if (showingChildren.length === 1) {
         return true
       }
 
-      // Show parent if there are no child router to display
+      // 如果没有子路由需要展示，则将 onlyOneChild 的 path 设置空，显示父路由
+      // 并添加 noShowingChildren 属性，表示虽然有子路由，但是不需要展示子路由
       if (showingChildren.length === 0) {
         this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
         return true
       }
-
       return false
     },
     resolvePath(routePath) {
