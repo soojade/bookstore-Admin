@@ -53,11 +53,23 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-
+  {
+    path: '/books',
+    component: Layout,
+    redirect: '/books/create',
+    meta: { title: '图书管理', icon: 'documentation', roles: ['admin'] },
+    children: [
+      {
+        path: '/books/create',
+        component: () => import('@/views/books/create'),
+        meta: { title: '上传图书', icon: 'edit', roles: ['admin'] }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
+// 调用 router.addRoutes(asyncRoutes) 添加动态路由
 const createRouter = () => new Router({
   mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
