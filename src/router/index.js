@@ -7,12 +7,13 @@ import Layout from '@/layout'
 
 export const constantRoutes = [
   {
+    // 重定向路由
     path: '/redirect',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/redirect/:path(.*)',
+        path: '/redirect/:path(.*)', // 如果不加 * 号，只能匹配一层 /xxx，/xx/xx更多则匹配不到
         component: () => import('@/views/redirect/index')
       }
     ]
@@ -45,8 +46,8 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: 'Dashboard', // 标签显示
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true } // affix 始终在标签栏显示
       }
     ]
   }
@@ -61,6 +62,7 @@ export const asyncRoutes = [
     children: [
       {
         path: '/books/create',
+        name: '上传图书',
         component: () => import('@/views/books/create'),
         meta: { title: '上传图书', icon: 'edit', roles: ['admin'] }
       }

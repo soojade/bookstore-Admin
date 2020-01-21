@@ -105,10 +105,10 @@ export default {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
+          this.otherQuery = this.getOtherQuery(query) // 提取非redirect的其它属性
         }
       },
-      immediate: true
+      immediate: true // 设置为true 在created时就调用
     }
   },
 
@@ -143,7 +143,7 @@ export default {
             .dispatch('user/login', this.loginForm)
             .then(() => {
               this.$router.push({
-                path: this.redirect || '/',
+                path: this.redirect || '/', // 首先路由redirect，没有就到首页，其余query部分会携带
                 query: this.otherQuery
               })
               this.loading = false
