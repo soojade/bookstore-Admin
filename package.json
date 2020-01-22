@@ -1,8 +1,8 @@
 {
-  "name": "vue-element-admin",
+  "name": "bookstore-admin",
   "version": "4.2.1",
-  "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "书城后台管理系统",
+  "author": "soojade",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
@@ -37,10 +37,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
+    "url": "https://github.com/soojade/bookstore-Admin"
   },
   "bugs": {
-    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
+    "url": "https://github.com/soojade/bookstore-Admin/issues"
   },
   "dependencies": {
     "axios": "0.18.1",
