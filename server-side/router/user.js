@@ -1,7 +1,13 @@
 const router = require('express').Router()
+const Result = require('../models/Result')
+router.post('/login', (req, res, next) => {
+  const username = req.body.username
+  const password = req.body.password
 
-router.get('/', (req, res, next) => {
-  res.json('欢迎来到用户信息页面')
+  if (username === 'admin' && password === '123456') {
+    new Result('登录成功').success(res)
+  } else {
+    new Result('登录失败').fail(res)
+  }
 })
-
 module.exports = router

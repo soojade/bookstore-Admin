@@ -44,8 +44,10 @@
   },
   "dependencies": {
     "axios": "0.18.1",
+    "body-parser": "^1.19.0",
     "clipboard": "2.0.4",
     "codemirror": "5.45.0",
+    "cors": "^2.8.5",
     "driver.js": "0.9.5",
     "dropzone": "5.5.1",
     "echarts": "4.2.1",
