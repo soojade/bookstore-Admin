@@ -1,12 +1,13 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm"
-             :model="loginForm"
-             :rules="loginRules"
-             class="login-form"
-             autocomplete="on"
-             label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">登 录</h3>
       </div>
@@ -15,65 +16,75 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input ref="username"
-                  v-model="loginForm.username"
-                  placeholder="用户名"
-                  name="username"
-                  type="text"
-                  tabindex="1"
-                  autocomplete="on" />
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="用户名"
+          name="username"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+          clearable
+        />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip"
-                  content="大写锁定已开启"
-                  placement="right"
-                  manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="大写锁定已开启"
+        placement="right"
+        manual
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
-          <el-input :key="passwordType"
-                    ref="password"
-                    v-model="loginForm.password"
-                    :type="passwordType"
-                    placeholder="密码"
-                    name="password"
-                    tabindex="2"
-                    autocomplete="on"
-                    @keyup.native="checkCapslock"
-                    @blur="capsTooltip = false"
-                    @keyup.enter.native="handleLogin" />
-          <span class="show-pwd"
-                @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <el-input
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="密码"
+            name="password"
+            tabindex="2"
+            autocomplete="on"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+          <!-- el-ui提供的眼睛不好看-->
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading"
-                 type="primary"
-                 style="width:100%;margin-bottom:30px;"
-                 @click.native.prevent="handleLogin">登 录</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >
+        登 录
+      </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      if (!value || value.trim() === '') {
         callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+      if (value.trim().length < 4) {
+        callback(new Error('密码不能少于4位'))
       } else {
         callback()
       }
@@ -119,22 +130,22 @@ export default {
       this.$refs.password.focus()
     }
   },
-
   methods: {
+    // 判断大写提示
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
     },
+
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
+      this.passwordType = this.passwordType === 'password' ? '' : 'password'
+      // 将回调延迟到下次 DOM 更新循环之后执行
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
+
+    // 处理登录
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -152,18 +163,22 @@ export default {
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
+          console.log('登录失败!!')
           return false
         }
       })
     },
+
     getOtherQuery(query) {
+      console.log(query)
       return Object.keys(query).reduce((acc, cur) => {
+        // 过滤redirect
         if (cur !== 'redirect') {
           acc[cur] = query[cur]
         }
-        return acc
-      }, {})
+        console.log(acc)
+        return acc // 这里返回的最终结果是一个对象
+      }, {}) // 这里的空对象{}作为 reduce回调的第一参数，即arr={}
     }
   }
 }
@@ -190,16 +205,16 @@ $cursor: #fff;
 
     input {
       background: transparent;
-      border: 0px;
+      border: 0;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 0;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
+        box-shadow: 0 0 0 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
@@ -210,6 +225,11 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+
+    /*清除图标右移*/
+    .el-input__suffix {
+      right: -28px;
+    }
   }
 }
 </style>
@@ -260,7 +280,7 @@ $light_gray: #eee;
     .title {
       font-size: 26px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0 auto 40px auto;
       text-align: center;
       font-weight: bold;
     }
