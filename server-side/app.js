@@ -9,6 +9,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use('/', router)
 
-app.listen(10086, () => {
-  console.log('服务启动成功，地址：http://localhost:10086')
+app.listen(80, () => {
+  console.log('服务启动成功，地址：http://localhost:80')
 })

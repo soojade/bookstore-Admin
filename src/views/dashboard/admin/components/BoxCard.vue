@@ -1,12 +1,17 @@
 <template>
-  <el-card class="box-card-component" style="margin-left:8px;">
-    <div slot="header" class="box-card-header">
+  <el-card class="box-card-component"
+           style="margin-left:8px;">
+    <div slot="header"
+         class="box-card-header">
       <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
     </div>
     <div style="position:relative;">
-      <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="vue-element-admin" />
-      <div style="padding-top:35px;" class="progress-item">
+      <pan-thumb :image="avatar"
+                 class="panThumb" />
+      <mallki class-name="mallki-text"
+              text="bookstore-admin" />
+      <div style="padding-top:35px;"
+           class="progress-item">
         <span>Vue</span>
         <el-progress :percentage="70" />
       </div>
@@ -20,7 +25,8 @@
       </div>
       <div class="progress-item">
         <span>ESLint</span>
-        <el-progress :percentage="100" status="success" />
+        <el-progress :percentage="100"
+                     status="success" />
       </div>
     </div>
   </el-card>
@@ -52,19 +58,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
+    ...mapGetters(['name', 'avatar', 'roles'])
   }
 }
 </script>
 
 <style lang="scss" >
-.box-card-component{
+.box-card-component {
   .el-card__header {
-    padding: 0px!important;
+    padding: 0px !important;
   }
 }
 </style>
@@ -92,25 +94,25 @@ export default {
   }
   .panThumb {
     z-index: 100;
-    height: 70px!important;
-    width: 70px!important;
-    position: absolute!important;
+    height: 70px !important;
+    width: 70px !important;
+    position: absolute !important;
     top: -45px;
     left: 0px;
     border: 5px solid #ffffff;
     background-color: #fff;
     margin: auto;
-    box-shadow: none!important;
+    box-shadow: none !important;
     /deep/ .pan-info {
-      box-shadow: none!important;
+      box-shadow: none !important;
     }
   }
   .progress-item {
     margin-bottom: 10px;
     font-size: 14px;
   }
-  @media only screen and (max-width: 1510px){
-    .mallki-text{
+  @media only screen and (max-width: 1510px) {
+    .mallki-text {
       display: none;
     }
   }
