@@ -3,8 +3,8 @@ const { body, validationResult } = require('express-validator')
 const boom = require('boom')
 const jwt = require('jsonwebtoken')
 const Result = require('../models/Result')
-const { md5 } = require('../utils')
-const { login } = require('../services/user')
+const { md5, decode } = require('../utils')
+const { login, findUser } = require('../services/user')
 const { PWD_SUGAR, PRIVATE_KEY, JWT_EXPIRED } = require('../utils/constant')
 
 router.post('/login',
@@ -36,6 +36,18 @@ router.post('/login',
   })
 
 router.get('/info', (req, res) => {
-  res.json('info page...')
+  const decoded = decode(req)
+  if (decoded && decoded.username) {
+    findUser(decoded.username).then(user => {
+      if (user) {
+        user.roles = [user.role]
+        new Result(user, '用户信息查询成功').success(res)
+      } else {
+        new Result(user, '用户信息查询失败').fail(res)
+      }
+    })
+  } else {
+    new Result('用户信息解析失败').fail(res)
+  }
 })
 module.exports = router
