@@ -1,6 +1,7 @@
 const {
   CODE_ERROR,
-  CODE_SUCCESS
+  CODE_SUCCESS,
+  CODE_TOKEN_EXPIRED
 } = require('../utils/constant')
 
 class Result {
@@ -48,6 +49,11 @@ class Result {
 
   fail(res) {
     this.code = CODE_ERROR
+    this.json(res)
+  }
+  // token 失效错误
+  jwtError(res) {
+    this.code = CODE_TOKEN_EXPIRED
     this.json(res)
   }
 }
